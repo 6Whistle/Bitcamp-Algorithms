@@ -1,6 +1,6 @@
 package memberOOP;
 
-public class MemberModel {
+public class Member {
     private String identification;
     private String password;
     private String verifyPassword;
@@ -8,11 +8,20 @@ public class MemberModel {
     private String socialSecurityNumber;
     private String phoneNumber;
     private String address;
+    private double height;
+    private double weight;
 
-    public MemberModel(){   this("", "", "", "", "", "","");  };
+    public Member(){   this("", "", "", "", "", "","");  };
 
-    public MemberModel(String id, String pw, String verifyPassword, String name,
-                       String socialSecurityNumber, String phoneNumber, String address){
+    //Kaup 지수에서 사용하는 생성자
+    public Member(double height, double weight){
+        this.height = height;
+        this.weight = weight;
+    }
+
+    //회원가입 시 사용하는 생성자
+    public Member(String id, String pw, String verifyPassword, String name,
+                  String socialSecurityNumber, String phoneNumber, String address){
         this.identification = id;
         this.password = pw;
         this.verifyPassword = verifyPassword;
@@ -22,7 +31,7 @@ public class MemberModel {
         this.address = address;
     }
 
-    public String getIdentification() {
+    public String getIdentification(){
         return identification;
     }
 
@@ -37,7 +46,11 @@ public class MemberModel {
 
     public String getSocialSecurityNumber() {   return socialSecurityNumber;    }
 
-    public String getAddress() {    return address; }
+    public String getAddress() {    return address;     }
+
+    public double getHeight() {     return height;      }
+
+    public double getWeight() {     return weight;      }
 
     @Override
     public String toString() {

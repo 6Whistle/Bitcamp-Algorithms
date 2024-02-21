@@ -1,4 +1,6 @@
 package kaupOOP;
 
-public class KaupService {
+public interface KaupService {
+    public Double createBMI();
+    public String createBodyMass();
 }
