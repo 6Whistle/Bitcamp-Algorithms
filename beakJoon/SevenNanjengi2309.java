@@ -1,7 +1,9 @@
+package beakJoon;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class SevenNanjengi {
+public class SevenNanjengi2309 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int[] arr = new int[9];

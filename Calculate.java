@@ -32,10 +32,13 @@ class Cal {
 
     //Calculate using a, b and op and print
     void calculate(){
-        res = op == '+' ? a + b :
-              op == '-' ? a - b :
-              op == '*' ? a * b :
-              op == '/' && b != 0 ? a / b : -1;
+        switch (op){
+            case '+':   res = a + b;     break;
+            case '-':   res = a - b;     break;
+            case '*':   res = a * b;     break;
+            case '/':   res = b != 0 ? a / b : -1;     break;
+            default:    res = -1;
+        }
     }
 
     //Print
