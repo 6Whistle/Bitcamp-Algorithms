@@ -1,3 +1,5 @@
+package matrixTest;
+
 import java.util.Scanner;
 
 public class Gugudan {

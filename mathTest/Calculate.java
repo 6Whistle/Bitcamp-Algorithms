@@ -1,3 +1,5 @@
+package mathTest;
+
 import java.util.Scanner;
 
 public class Calculate{
@@ -30,7 +32,7 @@ class Cal {
         this.op = scan.next().charAt(0);
     }
 
-    //Calculate using a, b and op and print
+    //mathTest.Calculate using a, b and op and print
     void calculate(){
         switch (op){
             case '+':   res = a + b;     break;
