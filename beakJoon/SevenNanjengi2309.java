@@ -1,20 +1,18 @@
 package beakJoon;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class SevenNanjengi2309 {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int[] arr = new int[9];
-        int sum = 0;
-        for(int i = 0; i < arr.length; i++) sum += (arr[i] = scan.nextInt());
-        for(int i = 0; i < arr.length - 1; i++)  for(int j = i + 1; j < arr.length; j++)
-            if((sum - arr[i] - arr[j]) == 100){
-                arr[i] = arr[j] = 100;
-                Arrays.sort(arr);
-                for(int k = 0; k < arr.length - 2; k++)    System.out.println(arr[k]);
-                return;
-            }
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        int sum = 0, tmp = 0;
+        List<Integer> arr = new Vector<>();
+        for(int i = 0; i < 9; sum += tmp, i++)  arr.add(tmp = Integer.parseInt(br.readLine()));
+        for(int i = 0; i < arr.size() - 1; i++)  for(int j = i + 1; j < arr.size(); j++)
+            if((sum - arr.get(i) - arr.get(j)) == 100){     arr.set(i, 100);    arr.set(j, 100);    break;  }
+        arr.stream().sorted().filter(i -> i != 100).forEach(i -> System.out.println(i.intValue()));
     }
 }
