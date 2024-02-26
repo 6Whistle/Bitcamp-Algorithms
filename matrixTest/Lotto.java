@@ -20,16 +20,16 @@ public class Lotto {
 
         // 정렬된 set 이용한 방식
         final int lottosNum = 5;
-        int[] cnt = new int[lottosNum + 1];
+        int[] cnt = new int[lottosNum];
+        Set<Integer> result = new TreeSet<>();
         List<Set<Integer>> lottos = new ArrayList<>();
-        for(int i = 0; i < lottosNum + 1; i++){     lottos.add(new TreeSet<>());      createLotto(lottos.get(i));   }
-        for(int i : lottos.get(0))  for(int j = 1; j < lottosNum + 1; j++)
+        for(createLotto(result); lottos.size() < lottosNum; lottos.add(new TreeSet<>()), createLotto(lottos.get(lottos.size() - 1)));
+        for(int i : result)  for(int j = 0; j < lottos.size(); j++)
             if(lottos.get(j).contains(i))   cnt[j]++;
+        System.out.println(result.toString());
         lottos.forEach( i -> System.out.println(i.toString()));
-        for(int i = 1; i < lottosNum + 1; i++)  System.out.printf("%d : %d등\n", i, cnt[i]);
+        for(int i = 0; i < cnt.length; i++)  System.out.printf("%d : %d등\n", i, 6 - cnt[i]);
     }
 
-    static void createLotto(Set<Integer> s){
-        for(; s.size() < 6; s.add(1 + (int)(Math.random() * 10)));
-    }
+    static void createLotto(Set<Integer> s){    for(; s.size() < 6; s.add(1 + (int)(Math.random() * 10)));      }
 }

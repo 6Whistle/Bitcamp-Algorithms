@@ -1,9 +1,7 @@
-package beakJoon;
+package baekJoonPair;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
 
 public class SevenNanjengiPair {
     public static void main(String[] args) {
@@ -14,6 +12,7 @@ public class SevenNanjengiPair {
             arr[i] = scanner.nextInt();
             sum += arr[i];
         }
+
         //배열에서 2가지 값을 고름
         for(int i = 0; i < arr.length - 1; i++){
             for(int j = i + 1; j < arr.length; j++){
