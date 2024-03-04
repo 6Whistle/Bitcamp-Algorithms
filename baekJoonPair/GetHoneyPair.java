@@ -24,7 +24,7 @@ public class GetHoneyPair {
         //양 끝에 벌이 있어야 하기에 전체 값에서 양 끝 값을 뺌
         //꿀통은 중간의 값들 중 가장 큰 값에 위치해야 가장 큼
         max += sum - arr[0] - arr[arr.length - 1];
-//        max = sum + 2 * max - arr[0] - arr[arr.length - 1];
+//        max = sum + max - arr[0] - arr[arr.length - 1];
 
         //가장 오른쪽에 꿀통이 있을 경우
         //가장 왼쪽에 벌이 있어야 함

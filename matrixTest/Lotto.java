@@ -5,26 +5,52 @@ import java.util.*;
 public class Lotto {
     public static void main(String[] args) {
         final int LOTTOS_BUY_COUNT = 2, LOTTOS_GENERATE_COUNT = 3;
-        BuyLottos bl = new BuyLottos(LOTTOS_BUY_COUNT);
-        Lottos l = new Lottos(LOTTOS_GENERATE_COUNT);
+        Lottos iBuyLottos = new Lottos(), autoBuyLottos = new Lottos();
+        LottoService iBuyService = IBuyLotto.getInstance(), autoBuyService = AutoBuyLotto.getInstance();
 
-        Set<Integer> result = l.generateLotto();
-        bl.generateLottos();
-        l.generateLottos();
+        Set<Integer> result = autoBuyService.generateLotto();
+        iBuyService.generateLottos(iBuyLottos, LOTTOS_BUY_COUNT);
+        autoBuyService.generateLottos(autoBuyLottos, LOTTOS_GENERATE_COUNT);
 
         System.out.println("------------ 로또 ------------");
         System.out.println(result);
 
-        bl.checkLottos(result);
-        bl.printLottos(result);
+        iBuyService.checkLottos(iBuyLottos, result);
+        autoBuyService.checkLottos(autoBuyLottos, result);
 
-        l.checkLottos(result);
-        l.printLottos(result);
+        iBuyService.printLottos(iBuyLottos, result);
+        autoBuyService.printLottos(autoBuyLottos, result);
     }
 }
 
-class BuyLottos extends Lottos{
-    BuyLottos(int size){    super(size);    }
+class Lottos{
+    protected int[] cnt;
+    protected List<Set<Integer>> lottos;
+
+    public int[] getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int[] cnt) {
+        this.cnt = cnt;
+    }
+
+    public List<Set<Integer>> getLottos() {
+        return lottos;
+    }
+
+    public void setLottos(List<Set<Integer>> lottos) {
+        this.lottos = lottos;
+    }
+}
+
+class IBuyLotto extends AutoBuyLotto{
+    private static LottoService instance = new IBuyLotto();
+    private IBuyLotto(){    super();    }
+
+    public static LottoService getInstance() {
+        return instance;
+    }
 
     @Override
     public Set<Integer> generateLotto() {
@@ -37,17 +63,16 @@ class BuyLottos extends Lottos{
     }
 }
 
-class Lottos implements LottoService {
-    public int SIZE = 0;
-    protected int[] cnt;
-    protected List<Set<Integer>> lottos;
+class AutoBuyLotto implements LottoService{
 
-    Lottos(){}
-    Lottos(int size){
-        SIZE = size;
-        cnt = new int[SIZE];
-        lottos = new ArrayList<>();
+    private static LottoService instance = new AutoBuyLotto();
+
+    protected AutoBuyLotto(){}
+
+    public static LottoService getInstance() {
+        return instance;
     }
+
     @Override
     public Set<Integer> generateLotto() {
         Set<Integer> lotto = new TreeSet<>();
@@ -56,29 +81,33 @@ class Lottos implements LottoService {
     }
 
     @Override
-    public void generateLottos() {
-        for(;lottos.size() < SIZE; lottos.add(this.generateLotto()));
+    public void generateLottos(Lottos lottos, int size) {
+        List<Set<Integer>> lottosGen = new ArrayList<>();
+        for(;lottosGen.size() < size; lottosGen.add(this.generateLotto()));
+        lottos.setLottos(lottosGen);
     }
 
 
     @Override
-    public void checkLottos(Set<Integer> result) {
-        for(int i : result)  for(int j = 0; j < lottos.size(); j++)
-            if(lottos.get(j).contains(i))   cnt[j]++;
+    public void checkLottos(Lottos lottos, Set<Integer> result) {
+        int[] cnt = new int[lottos.getLottos().size()];
+        for(int i : result)  for(int j = 0; j < lottos.getLottos().size(); j++)
+            if(lottos.getLottos().get(j).contains(i))   cnt[j]++;
+        lottos.setCnt(cnt);
     }
 
     @Override
-    public void printLottos(Set<Integer> result) {
+    public void printLottos(Lottos lottos, Set<Integer> result) {
         System.out.println("------------ 로또 ------------");
-        lottos.forEach(i -> System.out.println(i.toString()));
+        lottos.getLottos().forEach(i -> System.out.println(i.toString()));
         System.out.println("------------ 등수 ------------");
-        for(int i = 0; i < cnt.length; i++)  System.out.printf("%d : %d등\n", i, 6 - cnt[i]);
+        for(int i = 0; i < lottos.getCnt().length; i++)  System.out.printf("%d : %d등\n", i + 1, 6 - lottos.getCnt()[i] + 1);
     }
 }
 
 interface LottoService{
     Set<Integer> generateLotto();
-    void generateLottos();
-    void checkLottos(Set<Integer> result);
-    void printLottos(Set<Integer> result);
+    void generateLottos(Lottos lottos, int size);
+    void checkLottos(Lottos lottos, Set<Integer> result);
+    void printLottos(Lottos lottos, Set<Integer> result);
 }
