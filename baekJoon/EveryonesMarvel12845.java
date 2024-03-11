@@ -16,7 +16,6 @@ public class EveryonesMarvel12845 {
         List<Integer> tmp = Stream.of(br.readLine().split(" "))
                 .map(Integer::parseInt)
                 .sorted(Comparator.reverseOrder())
-                .
                 .collect(Collectors.toList());
         System.out.println(tmp.stream().reduce((i, j) -> i + j + tmp.get(0)).orElse(0) - tmp.get(0));
     }
